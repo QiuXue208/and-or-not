@@ -1,18 +1,20 @@
 <template>
   <div class="condition-group">
-    <div class="group-header">
-      <n-checkbox
-        style="width: 70px"
-        v-model:checked="modelValue.notFlag"
-      >NOT</n-checkbox>
-      <n-select
-        v-model:value="modelValue.logicType"
-        :options="LOGIC_TYPE_OPTIONS"
-        style="width: 80px"
-      />
+    <div class="group-logic">
+      <div class="group-logic-content">
+        <n-checkbox
+          style="width: 70px"
+          v-model:checked="modelValue.notFlag"
+        >NOT</n-checkbox>
+        <n-select
+          v-model:value="modelValue.logicType"
+          :options="LOGIC_TYPE_OPTIONS"
+          style="width: 80px"
+        />
+      </div>
     </div>
     
-    <div class="group-container">
+    <div class="group-content">
       <div
         class="condition-item"
         v-for="(item, index) in modelValue.children"
@@ -31,7 +33,7 @@
           @remove="removeChild(index)"
         />
       </div>
-      <div class="group-footer">
+      <div class="group-operators">
         <n-button dashed @click="addCondition">加条件</n-button>
         <n-button dashed @click="addConditionGroup">加条件组</n-button>
       </div>
@@ -85,31 +87,79 @@ const removeChild = (index: number) => {
 <style scoped lang="less">
 .condition-group {
   border-radius: 2px;
-  padding: 16px;
   margin: 8px 0;
   display: flex;
   flex-direction: row;
 
-  .group-container {
+  .group-content {
     display: flex;
     flex-direction: column;
+    position: relative;
+    margin-left: 24px;
+    flex: 1;
+    .condition-item:first-child {
+      &::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        background-color: #fff;
+        left: -55px;
+        width: 50px;
+        top: 0px;
+        height: 20px;
+        border-bottom: 1px solid #D9D9D9;
+      }
+    }
+    .group-operators {
+      position: relative;
+      &::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        background-color: #fff;
+        left: -55px;
+        width: 50px;
+        top: 15px;
+        height: 20px;
+        border-top: 1px solid #D9D9D9;
+      }
+    }
   }
 
-  .group-header {
+  .group-logic {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 16px;
+    flex-direction: column;
+    &::before,
+    &::after {
+      position: relative;
+      right: 30px;
+      content: "";
+      width: 100%;
+      flex: 1;
+      border-right: 1px solid #d9d9d9;
+    }
+    &-content {
+      display: flex;
+      align-items: center;
+      .n-checkbox {
+        background: #F5F5F5;
+        border-radius: 2px;
+        padding: 5px 4px;
+        margin-right: 4px;
+        white-space: nowrap;
+      }
+    }
   }
 
-  .group-content {
-    margin-left: 24px;
-  }
-
-  .group-footer {
+  .group-operators {
     margin-top: 16px;
-    display: flex;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    gap: 16px;
+    .n-button {
+      flex: 1;
+    }
   }
 }
 </style> 

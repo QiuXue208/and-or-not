@@ -1,9 +1,12 @@
 <template>
   <div class="wrapper">
-    <template v-if="!formData">
-      <n-button dashed @click="addCondition">加条件</n-button>
+    <div class="operations-container" v-if="!formData">
+      <n-button
+        dashed
+        @click="addCondition"
+      >加条件</n-button>
       <n-button dashed @click="addConditionGroup">加条件组</n-button>
-    </template>
+    </div>
     <template v-else>
       <condition-group
         v-model="formData"
@@ -65,5 +68,14 @@ const addConditionGroup = () => {
   border-radius: 2px;
   padding: 16px;
   width: 100%;
+
+  .operations-container {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    gap: 16px;
+    .n-button {
+      flex: 1;
+    }
+  }
 }
 </style>

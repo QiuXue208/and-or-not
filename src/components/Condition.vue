@@ -8,27 +8,23 @@
       v-model:value="modelValue.columnName"
       :options="columnOptions"
       placeholder="请选择条件项"
-      style="width: 200px"
       @update="handleColumnChange"
     />
     <n-select
       v-model:value="modelValue.operator"
       :options="operatorOptions"
       placeholder="请选择"
-      style="width: 120px"
     />
     <n-select
       v-if="selectedColumn?.attrShowType === 'select'"
       v-model:value="modelValue.columnValue"
       :options="selectedColumn?.dataAttrConstantDTOList || []"
       placeholder="请选择条件值"
-      style="width: 200px"
     />
     <n-input
       v-else
       v-model:value="modelValue.columnValue"
       placeholder="请输入条件值"
-      style="width: 200px"
     />
     <n-button text @click="$emit('remove')">
       <template #icon>
@@ -97,5 +93,12 @@ const handleColumnChange = (value: string) => {
   align-items: center;
   gap: 8px;
   margin: 8px 0;
+  .n-checkbox {
+    background: #F5F5F5;
+    border-radius: 2px;
+    padding: 5px 4px;
+    margin-right: 4px;
+    white-space: nowrap;
+  }
 }
 </style> 
