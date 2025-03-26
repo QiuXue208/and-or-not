@@ -69,11 +69,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { NButton, NSelect, NInput, NIcon, NCheckbox, NForm,NFormItem } from 'naive-ui'
 import { Trash } from '@vicons/ionicons5'
 import { COLUMN_DATA } from '../views/constant/field'
-import { STRING_OPERATORS, NUMBER_OPERATORS, DATE_OPERATORS, ARRAY_OPERATORS } from '../views/constant'
+import { STRING_OPERATORS, NUMBER_OPERATORS, TIME_OPERATORS, ARRAY_OPERATORS } from '../views/constant'
 import { OPERATOR_ENUM, type ConditionItem } from '../views/types'
 
 const props = defineProps<{
@@ -92,14 +92,18 @@ const rules = ref({
   columnName: [{
     required: true,
     message: '请选择条件项',
-    trigger: 'change'
+    trigger: 'blur'
   }],
   operator: [{
     required: true,
     message: '请选择操作符',
-    trigger: 'change'
+    trigger: 'blur'
   }],
 })
+
+watch(formData, (newVal) => {
+  emit('update:modelValue', newVal)
+}, { deep: true })
 
 // 转换字段数据为选项格式
 const columnOptions = COLUMN_DATA.map(item => ({
@@ -130,7 +134,7 @@ const operatorOptions = computed(() => {
   } else if (operateTypeCode === 'operator_int') {
     return NUMBER_OPERATORS
   } else if (operateTypeCode === 'operator_time') {
-    return DATE_OPERATORS
+    return TIME_OPERATORS
   } else {
     return STRING_OPERATORS
   }

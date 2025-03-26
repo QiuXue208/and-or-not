@@ -69,7 +69,7 @@ export const NUMBER_OPERATORS = [
 ]
 
 // 匹配日期时间的操作符列表
-export const DATE_OPERATORS = [
+export const TIME_OPERATORS = [
   {
     label: '=',
     value: OPERATOR_ENUM.EQUAL,
