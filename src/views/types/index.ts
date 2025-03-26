@@ -43,3 +43,29 @@ export enum OPERATE_TYPE_CODE_ENUM {
   // 数组
   ARRAY = 'operator_array_str',
 }
+
+export interface ConditionItem {
+  id?: string;
+  // 属性字段
+  columnName?: string;
+  // 属性名称
+  columnValue?: string;
+  // 逻辑操作类型
+  logicType?: LOGIC_TYPE_ENUM;
+  // 操作符
+  operator?: OPERATOR_ENUM;
+  // 是否取反
+  notFlag?: boolean;
+  // 操作类型code
+  operateTypeCode?: OPERATE_TYPE_CODE_ENUM;
+  // 数组类型
+  arrayFlag?: number;
+  // 属性描述
+  attrDesc?: string;
+  // 条件值输入框类型
+  attrShowType?: 'input' | 'select';
+  // 条件值列表
+  dataAttrConstantDTOList?: any[];
+  // 子节点
+  children?: ConditionItem[];
+}

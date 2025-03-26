@@ -1,3 +1,5 @@
+import { LOGIC_TYPE_ENUM } from "../types"
+
 export const COLUMN_DATA = [
   {
       "id": "1",
@@ -1099,4 +1101,15 @@ export const COLUMN_DATA = [
       ],
       "childrenList": null
   },
+]
+
+export const LOGIC_TYPE_OPTIONS = [
+  {
+    label: 'AND',
+    value: LOGIC_TYPE_ENUM.AND
+  },
+  {
+    label: 'OR',
+    value: LOGIC_TYPE_ENUM.OR
+  }
 ]

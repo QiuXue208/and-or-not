@@ -1,9 +1,69 @@
+<template>
+  <div class="wrapper">
+    <template v-if="!formData">
+      <n-button dashed @click="addCondition">加条件</n-button>
+      <n-button dashed @click="addConditionGroup">加条件组</n-button>
+    </template>
+    <template v-else>
+      <condition-group
+        v-model="formData"
+        @remove="formData = undefined"
+      />
+    </template>
+  </div>
+</template>
+
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import { ref } from 'vue';
+import { NButton } from 'naive-ui';
+import { LOGIC_TYPE_ENUM } from './types';
+import type { ConditionItem } from './types';
+import ConditionGroup from '../components/ConditionGroup.vue';
+
+const formData = ref<ConditionItem>()
+
+const addCondition = () => {
+  formData.value = {
+    logicType: LOGIC_TYPE_ENUM.AND,
+    notFlag: false,
+    children: [
+      {
+        notFlag: false,
+        columnName: undefined,
+        columnValue: undefined,
+        operator: undefined,
+      }
+    ]
+  }
+}
+
+const addConditionGroup = () => {
+  formData.value = {
+    logicType: LOGIC_TYPE_ENUM.AND,
+    notFlag: false,
+    children: [
+      {
+        logicType: LOGIC_TYPE_ENUM.AND,
+        notFlag: false,
+        children: [
+          {
+            notFlag: false,
+            columnName: undefined,
+            columnValue: undefined,
+            operator: undefined,
+          }
+        ]
+      }
+    ]
+  }
+}
 </script>
 
-<template>
-  <main>
-    <TheWelcome />
-  </main>
-</template>
+<style lang="less" scoped>
+.wrapper {
+  border: 1px solid #D9D9D9;
+  border-radius: 2px;
+  padding: 16px;
+  width: 100%;
+}
+</style>
