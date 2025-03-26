@@ -156,7 +156,7 @@ const removeChild = (index: number) => {
     margin-top: 16px;
     display: grid;
     grid-template-columns: 2fr 2fr;
-    gap: 16px;
+    gap: 8px;
     .n-button {
       flex: 1;
     }
