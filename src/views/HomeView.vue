@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="operations-container" v-if="!formData">
+    <div class="operations-container" v-if="!formData?.children?.length">
       <n-button
         dashed
         @click="addCondition"

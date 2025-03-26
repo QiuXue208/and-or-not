@@ -1,13 +1,13 @@
 <template>
-  <div class="condition-group">
+  <div class="condition-group" v-if="formData.children?.length">
     <div class="group-logic">
       <div class="group-logic-content">
         <n-checkbox
           style="width: 70px"
-          v-model:checked="modelValue.notFlag"
+          v-model:checked="formData.notFlag"
         >NOT</n-checkbox>
         <n-select
-          v-model:value="modelValue.logicType"
+          v-model:value="formData.logicType"
           :options="LOGIC_TYPE_OPTIONS"
           style="width: 80px"
         />
@@ -17,19 +17,18 @@
     <div class="group-content">
       <div
         class="condition-item"
-        v-for="(item, index) in modelValue.children"
+        v-for="(item, index) in formData.children"
         :key="index"
       >
         <!-- 如果是条件组 -->
         <condition-group
-          v-if="item.logicType === LOGIC_TYPE_ENUM.AND"
-          v-model="modelValue.children[index]"
-          @remove="removeChild(index)"
+          v-if="item.children?.length"
+          v-model="formData.children[index]"
         />
         <!-- 如果是条件项 -->
         <condition
           v-else
-          v-model="modelValue.children[index]"
+          v-model="formData.children[index]"
           @remove="removeChild(index)"
         />
       </div>
@@ -47,6 +46,7 @@ import { LOGIC_TYPE_OPTIONS } from '../views/constant/field'
 import { LOGIC_TYPE_ENUM } from '../views/types'
 import type { ConditionItem } from '../views/types'
 import Condition from './Condition.vue'
+import { ref } from 'vue'
 
 const props = defineProps<{
   modelValue: ConditionItem
@@ -54,19 +54,21 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: ConditionItem): void
-  (e: 'remove'): void
 }>()
 
+const formData = ref(props.modelValue)
+
 const addCondition = () => {
-  props.modelValue.children?.push({
+  formData.value.children?.push({
     columnName: undefined,
     columnValue: undefined,
     operator: undefined,
   })
+  emit('update:modelValue', formData.value)
 }
 
 const addConditionGroup = () => {
-  props.modelValue.children?.push({
+  formData.value.children?.push({
     logicType: LOGIC_TYPE_ENUM.AND,
     notFlag: false,
     children: [
@@ -77,10 +79,12 @@ const addConditionGroup = () => {
       }
     ]
   })
+  emit('update:modelValue', formData.value)
 }
 
 const removeChild = (index: number) => {
-  props.modelValue.children?.splice(index, 1)
+  formData.value.children?.splice(index, 1)
+  emit('update:modelValue', formData.value)
 }
 </script>
 
