@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { NButton, NCheckbox, NSelect, NIcon } from 'naive-ui'
+import { NButton, NCheckbox, NSelect } from 'naive-ui'
 import { LOGIC_TYPE_OPTIONS } from '../views/constant/field'
 import { LOGIC_TYPE_ENUM } from '../views/types'
 import type { ConditionItem } from '../views/types'
