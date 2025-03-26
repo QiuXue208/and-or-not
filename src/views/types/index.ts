@@ -31,3 +31,15 @@ export enum OPERATOR_ENUM {
   // contains
   CONTAINS = 12,
 }
+
+// 操作类型枚举
+export enum OPERATE_TYPE_CODE_ENUM {
+  // 整数
+  INT = 'operator_int',
+  // 字符串
+  STRING = 'operator_str',
+  // 时间
+  TIME = 'operator_time',
+  // 数组
+  ARRAY = 'operator_array_str',
+}
