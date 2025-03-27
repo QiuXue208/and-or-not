@@ -1,18 +1,21 @@
 <template>
-  <div class="wrapper">
-    <div class="operations-container" v-if="!formData?.children?.length">
-      <n-button
-        dashed
-        @click="addCondition"
-      >加条件</n-button>
-      <n-button dashed @click="addConditionGroup">加条件组</n-button>
+  <div class="home-view">
+    <div class="wrapper">
+      <div class="operations-container" v-if="!formData?.children?.length">
+        <n-button
+          dashed
+          @click="addCondition"
+        >加条件</n-button>
+        <n-button dashed @click="addConditionGroup">加条件组</n-button>
+      </div>
+      <template v-else>
+        <condition-group
+          v-model="formData"
+          @remove="formData = undefined"
+        />
+      </template>
     </div>
-    <template v-else>
-      <condition-group
-        v-model="formData"
-        @remove="formData = undefined"
-      />
-    </template>
+    <JsonViewer :data="formData" />
   </div>
 </template>
 
@@ -22,6 +25,7 @@ import { NButton } from 'naive-ui';
 import { LOGIC_TYPE_ENUM } from './types';
 import type { ConditionItem } from './types';
 import ConditionGroup from '../components/ConditionGroup.vue';
+import JsonViewer from '../components/JsonViewer.vue';
 
 const formData = ref<ConditionItem>()
 
@@ -63,6 +67,12 @@ const addConditionGroup = () => {
 </script>
 
 <style lang="less" scoped>
+.home-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .wrapper {
   border: 1px solid #D9D9D9;
   border-radius: 2px;
