@@ -3,6 +3,9 @@
 一个基于 Vue 3 + TypeScript + Naive UI 的条件构建器组件。
 
 ## 功能特点
+[预览地址](https://qiuxue208.github.io/and-or-not)
+
+## 功能特点
 
 - 支持条件组的嵌套
 - 支持 AND/OR/NOT 逻辑操作
@@ -20,25 +23,6 @@ npm run dev
 
 # 构建生产版本
 npm run build
-```
-
-## 使用方法
-
-```vue
-<template>
-  <condition-group
-    v-model="formData"
-    @remove="formData = undefined"
-  />
-</template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import type { ConditionItem } from './types'
-import ConditionGroup from './components/ConditionGroup.vue'
-
-const formData = ref<ConditionItem>()
-</script>
 ```
 
 ## 数据结构
@@ -60,15 +44,3 @@ interface ConditionItem {
   children?: ConditionItem[]
 }
 ```
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
