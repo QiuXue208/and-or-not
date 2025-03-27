@@ -16,18 +16,20 @@
     
     <div class="group-content">
       <div
-        class="condition-item"
+        class="group-content-item"
         v-for="(item, index) in formData.children"
         :key="index"
       >
         <!-- 如果是条件组 -->
         <condition-group
           v-if="item.children?.length"
+          ref="conditionGroupRefs"
           v-model="formData.children[index]"
         />
         <!-- 如果是条件项 -->
         <condition
           v-else
+          ref="conditionRefs"
           v-model="formData.children[index]"
           @remove="removeChild(index)"
         />
@@ -57,6 +59,8 @@ const emit = defineEmits<{
 }>()
 
 const formData = ref(props.modelValue)
+const conditionGroupRefs = ref([])
+const conditionRefs = ref([])
 
 const addCondition = () => {
   formData.value.children?.push({
@@ -86,6 +90,36 @@ const removeChild = (index: number) => {
   formData.value.children?.splice(index, 1)
   emit('update:modelValue', formData.value)
 }
+
+const validateAll = async () => {
+  let isValid = true;
+
+  // 校验子条件组
+  if (conditionGroupRefs.value.length > 0) {
+    const groupResults = await Promise.all(
+      conditionGroupRefs.value.map((item: { validateAll: () => Promise<boolean> }) => item.validateAll())
+    );
+    isValid = isValid && groupResults.every((result: boolean) => result === true);
+  }
+
+  // 校验条件项
+  if (conditionRefs.value.length > 0) {
+    try {
+      const itemResults = await Promise.all(
+        conditionRefs.value.map((item: { validate: () => Promise<boolean> }) => item.validate())
+      );
+      isValid = isValid && itemResults.every((result: boolean) => result === true);
+    } catch (error) {
+      isValid = false;
+    }
+  }
+
+  return isValid; 
+}
+
+defineExpose({
+  validateAll: validateAll,
+})
 </script>
 
 <style scoped lang="less">

@@ -1,5 +1,10 @@
 <template>
-  <n-form class="condition-item" :model="formData" :rules="rules">
+  <n-form
+    ref="formRef"
+    class="condition-item"
+    :model="formData"
+    :rules="rules"
+  >
     <n-form-item :show-label="false" path="notFlag">
       <n-checkbox
         style="width: 70px;"
@@ -87,17 +92,18 @@ const emit = defineEmits<{
 
 const selectedColumn = ref<ConditionItem>()
 const formData = ref(props.modelValue)
+const formRef = ref<InstanceType<typeof NForm>>()
 
 const rules = ref({
   columnName: [{
     required: true,
     message: '请选择条件项',
-    trigger: 'blur'
+    trigger: 'change'
   }],
   operator: [{
     required: true,
     message: '请选择操作符',
-    trigger: 'blur'
+    trigger: 'change'
   }],
 })
 
@@ -150,6 +156,18 @@ const handleColumnChange = (value: string) => {
   formData.value.operateTypeCode = selectedColumn.value?.operateTypeCode
   formData.value.dataAttrConstantDTOList = selectedColumn.value?.dataAttrConstantDTOList || []
 }
+
+const validate = async () => {
+  const res = await formRef.value?.validate()
+  if (res) {
+    return true
+  }
+  return false
+}
+
+defineExpose({
+  validate,
+})
 </script>
 
 <style scoped lang="less">

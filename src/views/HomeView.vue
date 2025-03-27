@@ -17,15 +17,16 @@
       </template>
     </div>
     <n-button
+      dashed
       @click="handleSubmit"
     >提交</n-button>
     <n-button
       dashed
       @click="handleShowData"
-    >{{ showData ? '收起数据' : '查看数据' }}</n-button>
+    >收起数据</n-button>
     <JsonViewer
       v-if="showData"
-      v-model:data="formData"
+      :value="formData"
       :expand-depth="5"
       copyable
       boxed
@@ -43,7 +44,7 @@ import JsonViewer from 'vue-json-viewer';
 
 const formData = ref<ConditionItem>();
 const showData = ref(false);
-const conditionGroupRef = ref<InstanceType<typeof ConditionGroup>>();
+const conditionGroupRef = ref();
 
 const addCondition = () => {
   formData.value = {
@@ -82,11 +83,15 @@ const addConditionGroup = () => {
 }
 
 const handleShowData = () => {
-  showData.value = !showData.value
+  showData.value = false
 }
 
-const handleSubmit = () => {
-  console.log(formData.value)
+const handleSubmit = async () => {
+  const isValid = await conditionGroupRef.value.validateAll()
+  console.log(isValid)
+  if (isValid) {
+    showData.value = true
+  }
 }
 </script>
 
