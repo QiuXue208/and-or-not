@@ -15,7 +15,11 @@
         />
       </template>
     </div>
-    <JsonViewer :data="formData" />
+    <n-button
+      dashed
+      @click="handleShowData"
+    >{{ showData ? '收起数据' : '输出数据' }}</n-button>
+    <JsonViewer v-if="showData" :data="formData" />
   </div>
 </template>
 
@@ -28,6 +32,7 @@ import ConditionGroup from '../components/ConditionGroup.vue';
 import JsonViewer from '../components/JsonViewer.vue';
 
 const formData = ref<ConditionItem>()
+const showData = ref(false)
 
 const addCondition = () => {
   formData.value = {
@@ -63,6 +68,10 @@ const addConditionGroup = () => {
       }
     ]
   }
+}
+
+const handleShowData = () => {
+  showData.value = !showData.value
 }
 </script>
 
