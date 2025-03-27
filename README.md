@@ -3,7 +3,7 @@
 一个基于 Vue 3 + TypeScript + Naive UI 的条件构建器组件。
 
 ## 预览地址
-[预览地址](https://qiuxue208.github.io/and-or-not)
+[https://qiuxue208.github.io/and-or-not](https://qiuxue208.github.io/and-or-not)
 
 ## 功能特点
 
