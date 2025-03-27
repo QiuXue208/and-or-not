@@ -10,16 +10,26 @@
       </div>
       <template v-else>
         <condition-group
+          ref="conditionGroupRef"
           v-model="formData"
           @remove="formData = undefined"
         />
       </template>
     </div>
     <n-button
+      @click="handleSubmit"
+    >提交</n-button>
+    <n-button
       dashed
       @click="handleShowData"
-    >{{ showData ? '收起数据' : '输出数据' }}</n-button>
-    <JsonViewer v-if="showData" :data="formData" />
+    >{{ showData ? '收起数据' : '查看数据' }}</n-button>
+    <JsonViewer
+      v-if="showData"
+      v-model:data="formData"
+      :expand-depth="5"
+      copyable
+      boxed
+    />
   </div>
 </template>
 
@@ -29,10 +39,11 @@ import { NButton } from 'naive-ui';
 import { LOGIC_TYPE_ENUM } from './types';
 import type { ConditionItem } from './types';
 import ConditionGroup from '../components/ConditionGroup.vue';
-import JsonViewer from '../components/JsonViewer.vue';
+import JsonViewer from 'vue-json-viewer';
 
-const formData = ref<ConditionItem>()
-const showData = ref(false)
+const formData = ref<ConditionItem>();
+const showData = ref(false);
+const conditionGroupRef = ref<InstanceType<typeof ConditionGroup>>();
 
 const addCondition = () => {
   formData.value = {
@@ -72,6 +83,10 @@ const addConditionGroup = () => {
 
 const handleShowData = () => {
   showData.value = !showData.value
+}
+
+const handleSubmit = () => {
+  console.log(formData.value)
 }
 </script>
 
