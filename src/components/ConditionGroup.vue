@@ -4,7 +4,7 @@
       <div class="group-logic-content">
         <n-checkbox
           style="width: 70px"
-          v-model:checked="formData.notFlag"
+          v-model="formData.notFlag"
         >NOT</n-checkbox>
         <n-select
           v-model:value="formData.logicType"
