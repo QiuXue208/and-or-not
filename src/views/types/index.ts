@@ -44,7 +44,12 @@ export enum OPERATE_TYPE_CODE_ENUM {
   ARRAY = 'operator_array_str',
 }
 
-export interface ConditionItem {
+// 将接口中的可选字段都变为可为 null
+type NullableOptional<T> = {
+  [P in keyof T]: T[P] | null | undefined;
+};
+export type ConditionItem = NullableOptional<
+{
   id?: string;
   // 属性字段
   columnName?: string;
@@ -69,3 +74,4 @@ export interface ConditionItem {
   // 子节点
   children?: ConditionItem[];
 }
+> 

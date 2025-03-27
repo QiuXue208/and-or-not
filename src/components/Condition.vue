@@ -151,8 +151,8 @@ const handleColumnChange = (value: string) => {
   selectedColumn.value = columnOptions.find(
     item => item.value === value
   ) as ConditionItem
-  formData.value.operator = undefined
-  formData.value.columnValue = undefined
+  formData.value.operator = null
+  formData.value.columnValue = null
   formData.value.operateTypeCode = selectedColumn.value?.operateTypeCode
   formData.value.dataAttrConstantDTOList = selectedColumn.value?.dataAttrConstantDTOList || []
 }
